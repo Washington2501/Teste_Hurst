@@ -1,0 +1,79 @@
+Cenário Cadastro:
+EU como cliente
+QUANDO tentar cadastrar um novo usuário no sistema
+ENTÃO eu devo ter um usuário devidamente cadastrado na base de dados
+E o usuário pode ser consultado pela aplicação
+
+Cenário 1: Cadastrar usuário - CPF correto
+DADO um usuário com CPF matematicamente válido
+QUANDO solicitada o cadastro de um novo usuário via endpoint '/auth/sign-up'
+ENTÃO o usuário deve ser cadastrado no sistema
+
+Cenário 2: Cadastrar usuário - CPF incorreto
+DADO um usuário com CPF matematicamente inválido
+QUANDO solicitada o cadastro de um novo usuário via endpoint '/auth/sign-up'
+ENTÃO a requisição deve retornar um HTTP statusCode 4XX
+E o usuário não deve ser cadastrado no sistema
+
+Cenário 3: Cadastrar usuário - E-mail incorreto
+DADO um usuário com um E-mail com formatação incorreta
+QUANDO solicitada o cadastro de um novo usuário via endpoint '/auth/sign-up'
+ENTÃO a requisição deve retornar um HTTP statusCode 4XX
+E o usuário não deve ser cadastrado no sistema
+
+————————————————————————————————————————————
+
+Cenário Pesquisa:
+EU como usuário já cadastrado no sistema
+QUANDO tentar pesquisar um usuário no sistema
+ENTÃO eu devo receber o usuário cadastrado na base de dados
+
+Cenário 1: Pesquisar usuário existente
+DADO um usuário já cadastrado e existente na base
+QUANDO solicitada a pesquisa de um usuário via endpoint ‘/account’
+ENTÃO a requisição deve retornar HTTP statusCode 200 - OK
+E os dados do usuário cadastrado devem ser exibidos
+
+Cenário 2: Pesquisar usuário inexistente
+DADO um usuário inexistente na base
+QUANDO solicitada a pesquisa de um usuário via endpoint ‘/account’
+ENTÃO a requisição deve retornar HTTP statusCode 404 - not_found
+E os dados do usuário não devem ser exibidos
+
+————————————————————————————————————————————
+
+Cenário Atualizar usuário
+EU como usuário já cadastrado no sistema
+QUANDO atualizar um usuário no sistema
+ENTÃO eu devo receber os dados do usuário já atualizados
+
+Cenário 1: Atualizar cliente existente
+DADO um usuário já cadastrado e existente na base
+QUANDO solicitada a atualização de algum campo do usuário via endpoint ‘/todo/{todoId}’
+ENTÃO a requisição deve retornar HTTP statusCode 200 - OK
+E o usuário deve ser exibido na resposta com os dados já atualizados
+
+Cenário 3: Atualizar usuário inexistente
+DADO um usuário inexistente na base
+QUANDO solicitada a atualização de algum campo do usuário via endpoint ‘/todo/{todoId}’
+ENTÃO a requisição deve retornar HTTP statusCode 4XX
+E uma mensagem de erro deve ser exibida na resposta
+
+————————————————————————————————————————————
+
+Cenário Deletar usuário:
+EU como usuário já cadastrado no sistema
+QUANDO tentar deletar um usuário cadastrado no sistema
+ENTÃO o usuário deve ser apagado do sistema
+
+Cenário 1: Deletar usuário existente
+DADO um usuário existente na base
+QUANDO solicitada a deleção do usuário via endpoint ‘/account/todo/{todoId}’
+ENTÃO a requisição deve retornar HTTP statusCode 200 - OK
+E o usuário deve ser deletado
+
+Cenário 2: Deletar usuário inexistente
+DADO um usuário inexistente na base
+QUANDO solicitada a deleção do usuário via endpoint ‘/account/todo/{todoId}’
+ENTÃO a requisição deve retornar HTTP statusCode 4XX
+E uma mensagem de erro deve ser retornada
