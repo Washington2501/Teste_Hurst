@@ -1,0 +1,687 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IUser": {
+				"description": "User object\nThe User object contains common information across every user in the system regardless of status and role.",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"cpf": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"pattern": "^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"age": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"cpf",
+					"email",
+					"firstName",
+					"lastName",
+					"age"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IResponse_IUser_": {
+				"properties": {
+					"data": {
+						"$ref": "#/components/schemas/IUser"
+					},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"data",
+					"success"
+				],
+				"type": "object"
+			},
+			"ResponseExt_IUser_": {
+				"$ref": "#/components/schemas/IResponse_IUser_"
+			},
+			"Pick_IUser.Exclude_keyofIUser.id__": {
+				"properties": {
+					"cpf": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string",
+						"pattern": "^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"age": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"cpf",
+					"email",
+					"firstName",
+					"lastName",
+					"age"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_IUser.id_": {
+				"$ref": "#/components/schemas/Pick_IUser.Exclude_keyofIUser.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"IResponse__user-IUser.token-string.expiresIn-number.type-string__": {
+				"properties": {
+					"data": {
+						"properties": {
+							"type": {
+								"type": "string"
+							},
+							"expiresIn": {
+								"type": "number",
+								"format": "double"
+							},
+							"token": {
+								"type": "string"
+							},
+							"user": {
+								"$ref": "#/components/schemas/IUser"
+							}
+						},
+						"required": [
+							"type",
+							"expiresIn",
+							"token",
+							"user"
+						],
+						"type": "object"
+					},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"data",
+					"success"
+				],
+				"type": "object"
+			},
+			"ResponseExt__user-IUser.token-string.expiresIn-number.type-string__": {
+				"$ref": "#/components/schemas/IResponse__user-IUser.token-string.expiresIn-number.type-string__"
+			},
+			"ITodo": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"userId",
+					"description",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"TZ_ITodo_": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/ITodo"
+					},
+					{
+						"properties": {
+							"updatedAt": {
+								"type": "string",
+								"format": "date-time"
+							},
+							"createdAt": {
+								"type": "string",
+								"format": "date-time"
+							}
+						},
+						"type": "object"
+					}
+				]
+			},
+			"IResponse__author-IUser--todo-TZ_ITodo_-Array--__": {
+				"properties": {
+					"data": {
+						"properties": {
+							"todo": {
+								"items": {
+									"$ref": "#/components/schemas/TZ_ITodo_"
+								},
+								"type": "array"
+							},
+							"author": {
+								"$ref": "#/components/schemas/IUser"
+							}
+						},
+						"required": [
+							"todo",
+							"author"
+						],
+						"type": "object"
+					},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"data",
+					"success"
+				],
+				"type": "object"
+			},
+			"ResponseExt__author-IUser--todo-TZ_ITodo_-Array--__": {
+				"$ref": "#/components/schemas/IResponse__author-IUser--todo-TZ_ITodo_-Array--__"
+			},
+			"IResponse_ITodo_": {
+				"properties": {
+					"data": {
+						"$ref": "#/components/schemas/ITodo"
+					},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"data",
+					"success"
+				],
+				"type": "object"
+			},
+			"ResponseExt_ITodo_": {
+				"$ref": "#/components/schemas/IResponse_ITodo_"
+			},
+			"Pick_ITodo.Exclude_keyofITodo.id__": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"description",
+					"name",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_ITodo.id_": {
+				"$ref": "#/components/schemas/Pick_ITodo.Exclude_keyofITodo.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"IResponse_ITodo-Array_": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/ITodo"
+						},
+						"type": "array"
+					},
+					"success": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"data",
+					"success"
+				],
+				"type": "object"
+			},
+			"ResponseExt_ITodo-Array_": {
+				"$ref": "#/components/schemas/IResponse_ITodo-Array_"
+			},
+			"SuccessMsg": {
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"enum": [
+							true
+						],
+						"nullable": false,
+						"default": true
+					},
+					"data": {
+						"properties": {
+							"message": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"code": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"message",
+							"name",
+							"code"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "apiKey",
+				"in": "header",
+				"name": "Authorization",
+				"description": "Bearer token acquired when user is logged in"
+			}
+		}
+	},
+	"info": {
+		"title": "hcp-sl-operation",
+		"version": "2.1.1",
+		"description": "Eu sou uma descrição",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/account": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt_IUser_"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"get": {
+				"operationId": "Gey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt_IUser_"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/auth/sign-up": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt_IUser_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/Omit_IUser.id_"
+									},
+									{
+										"properties": {
+											"password": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"password"
+										],
+										"type": "object"
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/sign-in": {
+			"post": {
+				"operationId": "SignIn",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt__user-IUser.token-string.expiresIn-number.type-string__"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"password": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"password",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/todo": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt__author-IUser--todo-TZ_ITodo_-Array--__"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt_ITodo_"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Omit_ITodo.id_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/todo/{todoId}": {
+			"get": {
+				"operationId": "GetBy",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt__author-IUser--todo-TZ_ITodo_-Array--__"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt_ITodo_"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ITodo"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SuccessMsg"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "todoId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/todo/batch": {
+			"post": {
+				"operationId": "Batch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseExt_ITodo-Array_"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/ITodo"
+								},
+								"type": "array"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		},
+		{
+			"url": "http://localhost:4000/",
+			"description": "Local"
+		},
+		{
+			"url": "https://apitest-hcp.hurst.capital/v2/account/",
+			"description": "Stage"
+		},
+		{
+			"url": "https://api-hcp.hurst.capital/v2/account/",
+			"description": "Prod"
+		}
+	],
+	"tags": [
+		{
+			"name": "User",
+			"description": "Operations about users, such as create, edit, update",
+			"externalDocs": {
+				"description": "Find out more about users"
+			}
+		}
+	]
+}
