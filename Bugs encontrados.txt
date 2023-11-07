@@ -1,0 +1,11 @@
+Bugs encontrados:
+
+1- Na requisição de Sign-up (cadastro), a aplicação não está validando o CPF do usuário e está aceitando um CPF zerado.
+
+2- O retorno da requisição de Sign-in (Login) passando uma senha incorreta ou email incorreto está trazendo o campo “sucess” ao invés de “success”. Há um teste validando o resultado correto.
+
+3- A funcionalidade de atualização de todo via endpoint ‘/todo/{todoId}’ não está atualizando os dados e e também não ignorando a query string {todoId} da URL.
+
+4- A funcionalidade de deleção de usuário realmente deleta o usuário, porém, ao realizar uma requisição de verbo GET para obter o cliente deletado, o endpoint GET /account’ está retornando 200 - OK e “success”: true.
+
+5- O endpoint ‘/todo/batch’ está retornando HTTP statusCode 500 (Internal server error).

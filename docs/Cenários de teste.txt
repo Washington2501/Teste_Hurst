@@ -12,13 +12,13 @@ ENTÃO o usuário deve ser cadastrado no sistema
 Cenário 2: Cadastrar usuário - CPF incorreto
 DADO um usuário com CPF matematicamente inválido
 QUANDO solicitada o cadastro de um novo usuário via endpoint '/auth/sign-up'
-ENTÃO a requisição deve retornar um HTTP statusCode 4XX
+ENTÃO a requisição deve retornar um HTTP statusCode 400 - Bad Request
 E o usuário não deve ser cadastrado no sistema
 
 Cenário 3: Cadastrar usuário - E-mail incorreto
 DADO um usuário com um E-mail com formatação incorreta
 QUANDO solicitada o cadastro de um novo usuário via endpoint '/auth/sign-up'
-ENTÃO a requisição deve retornar um HTTP statusCode 4XX
+ENTÃO a requisição deve retornar um HTTP statusCode 422 - Unprocessable Entity
 E o usuário não deve ser cadastrado no sistema
 
 ————————————————————————————————————————————
