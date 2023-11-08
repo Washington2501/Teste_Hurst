@@ -4,9 +4,10 @@ const request = require('supertest')
 const email = faker.internet.email()
 const nome = faker.firstName
 const userId = faker.userId
+const urlBase = 'https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com'
 
 beforeAll( async () => {
-    const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+    const res = await request(`${urlBase}`)
     .post(`/auth/sign-up`)
     .send({
         cpf: '59687819049',
@@ -26,7 +27,7 @@ beforeAll( async () => {
 describe('Login de usuario', () => {
 
     it('Login - Senha correta', async () => {
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -39,7 +40,7 @@ describe('Login de usuario', () => {
     })
     
     it('Login - Senha incorreta', async () => {
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '456Mudar',
@@ -53,7 +54,7 @@ describe('Login de usuario', () => {
     })
 
     it('Login - Email incorreto', async () => {
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -70,7 +71,7 @@ describe('Login de usuario', () => {
 describe('Pesquisa de usuario', () => {
     
     it('Pesquisar usuario - usuario existente', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -79,7 +80,7 @@ describe('Pesquisa de usuario', () => {
 
         const jwtToken = response.body.data.token
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .get(`/account`)
         .set('Authorization', jwtToken)
 
@@ -89,7 +90,7 @@ describe('Pesquisa de usuario', () => {
     })
 
     it('Pesquisar usuario - usuario inexistente', async () => {
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .get(`/account`)
         .set('Authorization', 'Token errado')
 
@@ -102,7 +103,7 @@ describe('Pesquisa de usuario', () => {
 describe('Criar to_do de usuario', () => {
 
     it('Criar to_do corretamente', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -111,7 +112,7 @@ describe('Criar to_do de usuario', () => {
 
         const jwtToken = response.body.data.token
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .post(`/todo`)
         .set('Authorization', jwtToken)
         .send({
@@ -132,7 +133,7 @@ describe('Criar to_do de usuario', () => {
 describe('Obter to_do de um usuario', () => {
 
     it('Obter um to_do de usuário', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -141,7 +142,7 @@ describe('Obter to_do de um usuario', () => {
 
         const jwtToken = response.body.data.token
         
-        const resTodo = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const resTodo = await request(`${urlBase}`)
         .post(`/todo`)
         .set('Authorization', jwtToken)
         .send({
@@ -154,7 +155,7 @@ describe('Obter to_do de um usuario', () => {
 
         const todoId = resTodo.body.data.id
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .get(`/todo/${todoId}`)
         .set('Authorization', jwtToken)
 
@@ -169,7 +170,7 @@ describe('Obter to_do de um usuario', () => {
 describe('Obter todos os to_do_s de usuario', () => {
 
     it('Obter todos os to_do_s de um usuario existente', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -178,7 +179,7 @@ describe('Obter todos os to_do_s de usuario', () => {
 
         const jwtToken = response.body.data.token
 
-        const resTodo = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const resTodo = await request(`${urlBase}`)
         .post(`/todo`)
         .set('Authorization', jwtToken)
         .send({
@@ -189,7 +190,7 @@ describe('Obter todos os to_do_s de usuario', () => {
             updatedAt: '2023-11-07T20:27:22.752Z'
         })
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .get(`/todo`)
         .set('Authorization', jwtToken)
 
@@ -200,7 +201,7 @@ describe('Obter todos os to_do_s de usuario', () => {
     })
 
     it('Obter todos os to_do_s de um usuario inexistente', async () => {
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .get(`/todo`)
         .set('Authorization', 'Token errado')
 
@@ -214,7 +215,7 @@ describe('Obter todos os to_do_s de usuario', () => {
 describe('Atualizar to_do de usuario', () => {
 
     it('Atualizar to_do de usuario existente', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -223,7 +224,7 @@ describe('Atualizar to_do de usuario', () => {
 
         const jwtToken = response.body.data.token
 
-        const resTodo = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const resTodo = await request(`${urlBase}`)
         .post(`/todo`)
         .set('Authorization', jwtToken)
         .send({
@@ -236,7 +237,7 @@ describe('Atualizar to_do de usuario', () => {
 
         const todoId = resTodo.body.data.id
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .put(`/todo/${todoId}`)
         .set('Authorization', jwtToken)
         .send({
@@ -258,7 +259,7 @@ describe('Atualizar to_do de usuario', () => {
 describe('Deletar to_do de usuario', () => {
 
     it('Deletar to_do de usuario existente', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -267,7 +268,7 @@ describe('Deletar to_do de usuario', () => {
 
         const jwtToken = response.body.data.token
 
-        const resTodo = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const resTodo = await request(`${urlBase}`)
         .post(`/todo`)
         .set('Authorization', jwtToken)
         .send({
@@ -280,7 +281,7 @@ describe('Deletar to_do de usuario', () => {
 
         const todoId = resTodo.body.data.id
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .del(`/todo/${todoId}`)
         .set('Authorization', jwtToken)
 
@@ -295,7 +296,7 @@ describe('Deletar to_do de usuario', () => {
 describe('Deletar usuario', () => {
 
     it('Deletar usuário existente', async () => {
-        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const response = await request(`${urlBase}`)
         .post(`/auth/sign-in`)
         .send({
             password: '123Mudar',
@@ -304,7 +305,7 @@ describe('Deletar usuario', () => {
 
         const jwtToken = response.body.data.token
 
-        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        const res = await request(`${urlBase}`)
         .del(`/account`)
         .set('Authorization', jwtToken)
 
