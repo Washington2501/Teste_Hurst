@@ -11,8 +11,8 @@ Repositório criado para realizar o teste da empresa Hurst.
 ## Para executar os testes automatizados (Jest):
 
     1- Clonar este repositório
-    2- Baixar as dependências digitando o comando ```nmp install```
-    3- Executar os testes usando o comando ```npx jest```
+    2- Baixar as dependências digitando o comando `nmp install`
+    3- Executar os testes usando o comando `npx jest`
 
 ## Considerações finais:
 - Os cenários de teste referentes aos testes realizados estão escritos no padrão do BDD na linguagem Gherkin no arquivo "Cenários de teste.txt" deste repositório.
