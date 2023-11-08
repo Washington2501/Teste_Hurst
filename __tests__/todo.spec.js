@@ -116,15 +116,15 @@ describe('Criar to_do de usuario', () => {
         .set('Authorization', jwtToken)
         .send({
             description: 'Descricao',
-            name: nome,
-            userId: userId,
+            name: 'Nome Teste to_do',
+            userId: 'userId Teste to_do',
             createdAt: '2023-11-07T20:27:22.752Z',
             updatedAt: '2023-11-07T20:27:22.752Z'
         })
 
         expect(res.body).toHaveProperty('data')
         expect(res.status).toBe(200)
-        expect(res.success).toBe(true)
+        expect(res.body.success).toBe(true)
     })
 
 })
@@ -146,8 +146,8 @@ describe('Obter to_do de um usuario', () => {
         .set('Authorization', jwtToken)
         .send({
             description: 'Descricao',
-            name: nome,
-            userId: userId,
+            name: 'Nome Teste to_do',
+            userId: 'userId Teste to_do',
             createdAt: '2023-11-07T20:27:22.752Z',
             updatedAt: '2023-11-07T20:27:22.752Z'
         })
@@ -160,7 +160,7 @@ describe('Obter to_do de um usuario', () => {
 
         expect(res.body).toHaveProperty('data')
         expect(res.status).toBe(200)
-        expect(res.success).toBe(true)
+        expect(res.body.success).toBe(true)
         
     })
 
@@ -168,7 +168,7 @@ describe('Obter to_do de um usuario', () => {
 
 describe('Obter todos os to_do_s de usuario', () => {
 
-    it('Obter todos os to_do_s de um usuário existente', async () => {
+    it('Obter todos os to_do_s de um usuario existente', async () => {
         const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
         .post(`/auth/sign-in`)
         .send({
@@ -183,8 +183,8 @@ describe('Obter todos os to_do_s de usuario', () => {
         .set('Authorization', jwtToken)
         .send({
             description: 'Descricao',
-            name: nome,
-            userId: userId,
+            name: 'Nome Teste to_do',
+            userId: 'userId Teste to_do',
             createdAt: '2023-11-07T20:27:22.752Z',
             updatedAt: '2023-11-07T20:27:22.752Z'
         })
@@ -195,11 +195,11 @@ describe('Obter todos os to_do_s de usuario', () => {
 
         expect(res.body).toHaveProperty('data')
         expect(res.status).toBe(200)
-        expect(res.success).toBe(true)
+        expect(res.body.success).toBe(true)
         
     })
 
-    it('Obter todos os to_do_s de um usuário inexistente', async () => {
+    it('Obter todos os to_do_s de um usuario inexistente', async () => {
         const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
         .get(`/todo`)
         .set('Authorization', 'Token errado')
@@ -211,28 +211,106 @@ describe('Obter todos os to_do_s de usuario', () => {
 
 })
 
-// describe('Atualizar to_do de usuario', () => {
+describe('Atualizar to_do de usuario', () => {
 
-//     it('', async () => {
+    it('Atualizar to_do de usuario existente', async () => {
+        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .post(`/auth/sign-in`)
+        .send({
+            password: '123Mudar',
+            email: email
+        })
+
+        const jwtToken = response.body.data.token
+
+        const resTodo = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .post(`/todo`)
+        .set('Authorization', jwtToken)
+        .send({
+            description: 'Descricao',
+            name: 'Nome Teste to_do',
+            userId: 'userId Teste to_do',
+            createdAt: '2023-11-07T20:27:22.752Z',
+            updatedAt: '2023-11-07T20:27:22.752Z'
+        })
+
+        const todoId = resTodo.body.data.id
+
+        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .put(`/todo/${todoId}`)
+        .set('Authorization', jwtToken)
+        .send({
+            description: 'Descricao',
+            name: 'Nome Teste to_do',
+            userId: 'userId Teste to_do',
+            createdAt: '2023-11-07T20:27:22.752Z',
+            updatedAt: '2023-11-07T20:27:22.752Z',
+            id: 'Id Teste to_do'
+        })
         
-//     })
+        expect(res.body).toHaveProperty('data')
+        expect(res.status).toBe(200)
+        expect(res.body.success).toBe(true)
+    })
 
-// })
+})
 
-// describe('Deletar to_do de usuario', () => {
+describe('Deletar to_do de usuario', () => {
 
-//     it('', async () => {
-        
-//     })
+    it('Deletar to_do de usuario existente', async () => {
+        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .post(`/auth/sign-in`)
+        .send({
+            password: '123Mudar',
+            email: email
+        })
 
-// })
+        const jwtToken = response.body.data.token
+
+        const resTodo = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .post(`/todo`)
+        .set('Authorization', jwtToken)
+        .send({
+            description: 'Descricao',
+            name: 'Nome Teste to_do',
+            userId: 'userId Teste to_do',
+            createdAt: '2023-11-07T20:27:22.752Z',
+            updatedAt: '2023-11-07T20:27:22.752Z'
+        })
+
+        const todoId = resTodo.body.data.id
+
+        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .del(`/todo/${todoId}`)
+        .set('Authorization', jwtToken)
+
+        expect(res.body).toHaveProperty('data')
+        expect(res.status).toBe(200)
+        expect(res.body.success).toBe(true)
+    })
+
+})
 
 
-// describe('Deletar usuario', () => {
+describe('Deletar usuario', () => {
 
-//     it('', async () => {
-        
-//     })
+    it('Deletar usuário existente', async () => {
+        const response = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .post(`/auth/sign-in`)
+        .send({
+            password: '123Mudar',
+            email: email
+        })
 
-// })
+        const jwtToken = response.body.data.token
+
+        const res = await request(`https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com`)
+        .del(`/account`)
+        .set('Authorization', jwtToken)
+
+        expect(res.status).toBe(200)
+        expect(res.body.success).toBe(true)
+    })
+
+})
 
