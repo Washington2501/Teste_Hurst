@@ -2,8 +2,9 @@ const { faker } = require('@faker-js/faker')
 const request = require('supertest')
 
 const email = faker.internet.email()
-const nome = faker.firstName
-const userId = faker.userId
+const nome = faker.person.firstName()
+const sobrenome = faker.person.lastName()
+const idade = Math.floor(Math.random() * 50) + 18
 const urlBase = 'https://c94dh2pfp1.execute-api.us-west-2.amazonaws.com'
 
 beforeAll( async () => {
@@ -12,9 +13,9 @@ beforeAll( async () => {
     .send({
         cpf: '59687819049',
         email: email,
-        firstName: 'Renato',
-        lastName: 'Moreira',
-        age: '28',
+        firstName: nome,
+        lastName: sobrenome,
+        age: idade,
         description: 'Descricao',
         password: '123Mudar'
 
